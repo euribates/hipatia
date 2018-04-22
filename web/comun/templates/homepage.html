@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cards %}
+
+{% block content %}
+
+<h2>Archivadores</h2>
+
+{% card "Archivadores" %}
+
+<ul class="list-group">
+    {% for arch in archivadores %}
+    <li class="list-group-item"> {{ arch.nombre }} 
+        <span class="badge badge-dark">{{ arch.n_docs }} 
+            <span class="sr-only">archivos</span></span>
+    </li>{% endfor %}
+</ul>
+
+{% endcard %}
+
+<h3>Documentos</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>nombre</th>
+            <th>url</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for doc in documentos %}<tr>
+        <td> {{ doc.nombre }} </td>
+        <td> <a href="{% static doc.archivo.url %}">{{ doc.archivo.url }}</a> </td>
+    </tr>{% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
