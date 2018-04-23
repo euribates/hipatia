@@ -29,7 +29,7 @@
     <tbody>
     {% for doc in documentos %}<tr>
         <td> {{ doc.nombre }} </td>
-        <td> <a href="{% static doc.archivo.url %}">{{ doc.archivo.url }}</a> </td>
+        <td> <a href="{{ doc.archivo.url }}">{{ doc.archivo.url }}</a> </td>
     </tr>{% endfor %}
     </tbody>
 </table>
