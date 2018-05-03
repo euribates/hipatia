@@ -3,35 +3,38 @@
 {% load cards %}
 
 {% block content %}
+<div class="row">
+ <div class="col-sm-4">
 
-<h2>Archivadores</h2>
+    {% list_card "Archivadores" %}
+        {% for arch in archivadores %}
+        <li class="list-group-item"> {{ arch.nombre }} 
+            <span class="badge badge-dark">{{ arch.n_docs }} 
+                <span class="sr-only">archivos</span></span>
+        </li>{% endfor %}
+    {% endcard %}
 
-{% card "Archivadores" %}
 
-<ul class="list-group">
-    {% for arch in archivadores %}
-    <li class="list-group-item"> {{ arch.nombre }} 
-        <span class="badge badge-dark">{{ arch.n_docs }} 
-            <span class="sr-only">archivos</span></span>
-    </li>{% endfor %}
-</ul>
+ </div>
 
-{% endcard %}
+ <div class="col-sm-8">
 
-<h3>Documentos</h3>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>nombre</th>
-            <th>url</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for doc in documentos %}<tr>
-        <td> {{ doc.nombre }} </td>
-        <td> <a href="{{ doc.archivo.url }}">{{ doc.archivo.url }}</a> </td>
-    </tr>{% endfor %}
-    </tbody>
-</table>
-
+    <h3>Últimos documentos</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>nombre</th>
+                <th>url</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for doc in documentos %}<tr>
+            <td> {{ doc.nombre }} </td>
+            <td> <a href="{{ doc.archivo.url }}">{{ doc.archivo.url }}</a> </td>
+        </tr>{% endfor %}
+        </tbody>
+    </table>
+ 
+ </div>
+</div>
 {% endblock %}

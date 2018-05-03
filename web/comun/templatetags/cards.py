@@ -19,16 +19,14 @@ class CardNode(template.Node):
     
     def __init__(self, tag_name, title, klass='default', body=''):
         self.tag_name = tag_name
-        self.klass = 'panel-{}'.format(klass)
+        self.klass = 'card-{}'.format(klass)
         self.title = title
         self.body = body
 
     def render(self, context):
         title = self.title.resolve(context)
-        buff = ['<div class="panel {}">'.format(self.klass)]
-        buff.append(' <div class="panel-heading">')
-        buff.append('  <h3 class="panel-title">{}</h3>'.format(title))
-        buff.append(' </div>')
+        buff = ['<div class="card {}">'.format(self.klass)]
+        buff.append('<div class="card-header">{}</div>'.format(title))
         buff.append(self.body_start_tag())
         buff.append(self.body.render(context))
         buff.append(self.body_end_tag())
@@ -37,8 +35,8 @@ class CardNode(template.Node):
 
     def body_start_tag(self):
         return {
-            'card': ' <div class="panel-body">',
-            'list_card': ' <ul class="list-group">',
+            'card': ' <div class="card-body">',
+            'list_card': ' <ul class="list-group list-group-flush">',
             'table_card': ' <table class="table">',
             }.get(self.tag_name)
 

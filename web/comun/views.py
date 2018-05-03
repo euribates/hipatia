@@ -5,6 +5,7 @@ from django.shortcuts import render
 def homepage(request):
     from archivo.models import Archivador, Documento
     return render(request, 'homepage.html', {
+        'title': 'Hipatia - Archivo documental',
         'archivadores': Archivador.objects.all().order_by('nombre'),
         'documentos': Documento.objects.all(),
         })
