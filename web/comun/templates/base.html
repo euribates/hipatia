@@ -5,17 +5,25 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 
-    <title>Hello, world!</title>
+    <title>{{ title }}</title>
   </head>
   <body>
-    <h1>Hello, world!</h1>
 
+    <div class="container-fluid">
+    {% include 'includes/header.html' %}
+    </div>
+
+    <div class="container-fluid" id="content">
     {% block content %}
 
     {% endblock %}
+    </div><!-- de container -->
+
+    {% include 'includes/footer.html' %}
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
