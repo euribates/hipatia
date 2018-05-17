@@ -11,6 +11,6 @@ class ArchivadorAdmin(admin.ModelAdmin):
 
 @admin.register(models.Documento)
 class DocumentoAdmin(admin.ModelAdmin):
-    list_display = ('archivador', 'nombre', 'archivo',)    
-
+    list_display = ('id_documento', 'archivador', 'nombre', 'archivo',)    
+    list_filter = ('archivador',)
 

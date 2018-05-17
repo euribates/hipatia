@@ -67,7 +67,10 @@ class Documento(models.Model):
         )
 
     def __str__(self):
-        return self.nombre
+        return '{} [{}]'.format(
+            self.nombre.split('/')[-1],
+            ', '.join([str(lbl) for lbl in self.etiquetas.all()]),
+            )
 
 
 
