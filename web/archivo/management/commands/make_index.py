@@ -11,12 +11,19 @@ class Command(BaseCommand):
     help = 'Crear índice whoosh'
 
     def handle(self, *args, **kwargs):
+        self.stdout.write('Creadon índice', ending=' ')
         schema = Schema(
-            path=ID(stored=True),
+            id_documento=ID(stored=True),
+            name=TEXT(stored=True),
+            labels=TEXT(stored=True),
             content=TEXT()
             )
         if not os.path.isdir(settings.INDEX_DIR):
             os.makedirs(settings.INDEX_DIR)
+            self.stdout.write('D', ending='')
         index = create_in(settings.INDEX_DIR, schema)
+        self.stdout.write('I', ending='')
+        self.stdout.write(' [ok]')
 
         
+
