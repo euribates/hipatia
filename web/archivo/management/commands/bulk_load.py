@@ -5,26 +5,14 @@ import sys
 import shutil
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
-import csv
 from collections import defaultdict 
 from archivo.models import Archivador, Documento, Etiqueta
 
 LABELS = ('2014', '2015', '2016', '2017', '2018', 'gastos', 'ingresos')
+DATA_DIR = os.path.normpath(os.path.join(settings.BASE_DIR, '..', 'data'))
 
 class Command(BaseCommand):
     help = 'Carga documentos a partir de una hoja csv'
-
-    def add_arguments(self, parser):
-        parser.add_argument('filename')
-
-    def get_data(self, filename):
-        data = defaultdict(list)
-        with open(filename, 'r', encoding='iso-8859-1') as stream:
-            reader = csv.reader(stream, dialect=csv.excel_tab)
-            columns = [s.lower() for s in next(reader)]
-            for (archivador, archivo) in reader:
-                data[archivador].append(archivo)
-        return data
 
     def make_media(self):
         if not os.path.isdir(settings.MEDIA_ROOT):
@@ -39,6 +27,19 @@ class Command(BaseCommand):
             if not existe:
                 Etiqueta(texto=label).save()
    
+    def get_data(self):
+        data = defaultdict(list)
+        for archivador in os.listdir(DATA_DIR):
+            archivador_full_path = os.path.join(DATA_DIR, archivador)
+            if os.path.isdir(archivador_full_path):
+                archivador = archivador.upper()
+                for (dir_path, dir_names, file_names) in os.walk(archivador_full_path):
+                    for file_name in file_names:
+                        if file_name.lower().endswith('.pdf'):
+                            full_name = os.path.join(dir_path, file_name)
+                            data[archivador].append(full_name)
+        return data
+
     def copy_file(self, source, archivo, filename):
         target = os.path.join(settings.MEDIA_ROOT, archivo.nombre)
         if not os.path.isdir(target):
@@ -74,9 +75,8 @@ class Command(BaseCommand):
         self.make_media()
         self.make_labels()
         self.stdout.write('Bulk load', ending=' ')
-        filename = kwargs.get('filename')
-        self.stdout.write('from file {}'.format(filename))
-        data = self.get_data(filename)
+        data = self.get_data()
+        
         for archivador in data: 
             archivos = data[archivador]
             self.stdout.write('A: {}'.format(archivador))
