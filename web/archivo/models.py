@@ -72,6 +72,8 @@ class Documento(models.Model):
             ', '.join([str(lbl) for lbl in self.etiquetas.all()]),
             )
 
+    def lista_etiquetas(self):
+        return list(self.etiquetas.all())
 
 
 

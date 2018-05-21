@@ -1,0 +1,40 @@
+{% extends 'base.html' %}{% load humanizer %}
+
+{% block content %}
+<h2>Archivador {{ archivador.nombre }}</h2>
+
+{% if num_docs == 0 %}
+    <p class="warning">No hay ningún documento en este archivador</p>
+{% elif num_docs == 1 %}
+    <p class="info">Hay un documento en este archivador</p>
+{% else %}
+    <p class="info">Hay {{ num_docs }} documentos en este archivador</p>
+{% endif %}
+
+
+{% if num_docs > 0 %}
+<table class="table table-striped">
+ <thead>
+  <tr>
+   <th>Archivador</th>
+   <th>Documento</th>
+   <th>Etiquetas</th>
+   <th>Tamaño</th>
+   <th>Fecha de creación</th>
+  </tr>
+ </thead>
+ <tbody>
+  {% for doc in documentos %}
+    <tr>
+    <th>{{ doc.archivador.nombre }}</th>
+    <td><a href="{{ doc.archivo.url }}">{{ doc.nombre }}</a></td>
+    <td>{{ doc.lista_etiquetas|join:", " }}</td>
+    <td>{{ doc.archivo.size|as_filesize }}</td>
+    <td> {{ doc.f_creacion }} </td>
+    </tr>
+  {% endfor %}
+ </tbody> 
+</table>
+{% endif %}
+{% endblock %}
+

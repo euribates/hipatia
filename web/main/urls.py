@@ -17,11 +17,17 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 
 import comun.views
+import archivo.views
 
 urlpatterns = [
     path('', comun.views.homepage, name='homepage'),
+    path('accounts/profile/', comun.views.homepage),
+    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('search', archivo.views.search, name='search'),
+    path('archivador/<int:id_archivador>/', archivo.views.archivador_detail, name='archivador_detail'),
     path('admin/', admin.site.urls),
 ]
 

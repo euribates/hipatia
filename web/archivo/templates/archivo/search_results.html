@@ -1,0 +1,39 @@
+{% extends 'base.html' %}{% load humanizer %}
+
+{% block content %}
+
+<p>Buscando por <tt>{{ query|escape }}</tt></p>
+
+{% if num_docs == 0 %}
+    <p class="warning">No se ha encontrado ningún documento</p>
+{% elif num_docs == 1 %}
+    <p class="info">Se ha encontrado un documento</p>
+{% else %}
+    <p class="info">Se ha encontrado {{ num_docs }} documentos</p>
+{% endif %}
+
+{% if num_docs > 0 %}
+<table class="table table-striped">
+ <thead>
+  <tr>
+   <th>Archivador</th>
+   <th>Documento</th>
+   <th>Etiquetas</th>
+   <th>Tamaño</th>
+  </tr>
+ </thead>
+ <tbody>
+  {% for doc in docs %}
+    <tr>
+    <th>{{ doc.archivador.nombre }}</th>
+    <td><a href="{{ doc.archivo.url }}">{{ doc.nombre }}</a></td>
+    <td>{{ doc.lista_etiquetas|join:", " }}</td>
+    <td>{{ doc.archivo.size|as_filesize }}</td>
+    </tr>
+  {% endfor %}
+ </tbody> 
+</table>
+{% endif %}
+
+
+{% endblock %}
