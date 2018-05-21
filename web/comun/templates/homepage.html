@@ -8,7 +8,9 @@
 
     {% list_card "Archivadores" %}
         {% for arch in archivadores %}
-        <li class="list-group-item"> {{ arch.nombre }} 
+        <li class="list-group-item">
+            <a href="{% url 'archivador_detail' arch.id_archivador %}">
+            {{ arch.nombre }} </a>
             <span class="badge badge-dark">{{ arch.n_docs }} 
                 <span class="sr-only">archivos</span></span>
         </li>{% endfor %}

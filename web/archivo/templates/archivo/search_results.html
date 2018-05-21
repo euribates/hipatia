@@ -25,7 +25,7 @@
  <tbody>
   {% for doc in docs %}
     <tr>
-    <th>{{ doc.archivador.nombre }}</th>
+    <th><a href="{% url 'archivador_detail' doc.archivador_id %}">{{ doc.archivador.nombre }}</a></th>
     <td><a href="{{ doc.archivo.url }}">{{ doc.nombre }}</a></td>
     <td>{{ doc.lista_etiquetas|join:", " }}</td>
     <td>{{ doc.archivo.size|as_filesize }}</td>
